@@ -47,7 +47,7 @@ contract Airdrop {
     }
 
 
-    function execute() public returns(bool){
+    function execute() public isOwner returns(bool){
         
         uint balance = CryptoToken(tokenAddress).balanceOf(address(this));
         require(balance >= 0, "Insufficient balance to start");
@@ -80,6 +80,7 @@ contract Airdrop {
     //Kill
     function kill() public isOwner {
         //TODO: needs implementation
+        contractState = Status.CANCELLED;
     }
 
 }
