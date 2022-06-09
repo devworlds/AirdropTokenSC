@@ -17,6 +17,7 @@ contract Airdrop {
     address public tokenAddress;
     Status contractState;
     address[] private subscribers;
+    mapping(address => bool) public addressToCheck;
 
 
     // Modifiers
@@ -30,16 +31,16 @@ contract Airdrop {
     constructor(address token) {
         owner = msg.sender;
         tokenAddress = token;
-        contractState = Status.ACTIVE;
+        contractState = Status.PAUSED;
     }
 
     // Public Functions
     function subscribe() public returns(bool) {
-   
+
         require(hasSubscribed(msg.sender) == false, "Wallet already subscribed!");
         subscribers.push(msg.sender);
+        addressToCheck[msg.sender] = true;
         return true;
-
     }
 
     function getSubscribe(uint256 index) public view returns(address){
@@ -68,19 +69,13 @@ contract Airdrop {
 
     // Private Functions
     function hasSubscribed(address subscriber) private view returns(bool) {
-
-        for(uint i = 0; i<subscribers.length; i++){
-            if(subscriber == subscribers[i]){
-                return true;
-            }
-        }
-        return false;
+        bool checkSub = addressToCheck[subscriber];
+        return checkSub;
     }
 
     //Kill
     function kill() public isOwner {
         //TODO: needs implementation
-        contractState = Status.CANCELLED;
     }
 
 }
