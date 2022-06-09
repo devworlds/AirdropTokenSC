@@ -1,4 +1,4 @@
-# ExercicioJC-07-06-2022
+# Airdrop importando contrato do Token.
 
 
 <h3> exercicio onde implementamos: <h3>
